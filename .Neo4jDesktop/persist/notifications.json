@@ -1,0 +1,14 @@
+{
+  "5d59d9fe-4c39-4c13-9ca3-c6d9c97609a0": {
+    "type": "error",
+    "message": "Invalid license signature",
+    "timestamp": 1692948310879,
+    "sentryEventId": "76f96e84f2ce42bb8e4e2d5b46c68155"
+  },
+  "d4d702ba-b94b-4d52-bc9a-dbe13c29fbf8": {
+    "type": "error",
+    "message": "License already exists",
+    "timestamp": 1692948664844,
+    "sentryEventId": "1a44a11996e8433a8e0a3a5ef5287a47"
+  }
+}
