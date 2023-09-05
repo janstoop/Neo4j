@@ -1,0 +1,2 @@
+MATCH (person:Person)-[:STUDIED_AT]->(institution:Institution {nameofinstitution: "Smart National University of Vietnam"})
+RETURN person.name, person.passportnumber;

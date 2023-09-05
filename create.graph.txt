@@ -1,0 +1,3 @@
+CREATE ({nameoforganization: "", designation: "", startyear: "", `endyear `: ""})<-[:WORKED_AT]-(`Person ` {passportnumber: "", name: ""})-[:TRAVELED_TO]->({name: ""})<-[:IS_FROM]-(`Person `)-[:STUDIED_AT]->({nameofinstitution: ""}),
+({cardnumber: ""})<-[:HAS_CARD]-(`Person `)-[:MADE_TRANSACTION]->({name: ""}),
+({name: ""})
