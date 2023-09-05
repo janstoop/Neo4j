@@ -1,7 +1,7 @@
 # Neo4j
 Technical homework assignment 
 
-## Create Graph Database from  
+## Create Graph Database  
 The CREATE statement was exported from [arrows.app](https://arrows.app/#/local/id=SOGAXPZOO3ZddOIpkT7T) using [Investigation for Public Safety - Social Network Data](https://gist.github.com/maruthiprithivi/10b456c74ba99a35a52caaffafb9d3dc) data
 ```bash
 CREATE ({nameoforganization: "", designation: "", startyear: "", `endyear `: ""})<-[:WORKED_AT]-(`Person ` {passportnumber: "", name: ""})-[:TRAVELED_TO]->({name: ""})<-[:IS_FROM]-(`Person `)-[:STUDIED_AT]->({nameofinstitution: ""}),
