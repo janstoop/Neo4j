@@ -11,28 +11,34 @@ CREATE ({nameoforganization: "", designation: "", startyear: "", `endyear `: ""}
 
 ## Import CSV data 
 ```bash
+// Create Person nodes and their educational history relationships
 LOAD CSV WITH HEADERS FROM 'file:///I:/Data/sng_education.csv' AS row
-MERGE (person:Person {passportnumber: row.passportnumber, name: row.name})
-MERGE (institution:Institution {nameofinstitution: row.nameofinstitution})
-MERGE (course:Course {name: row.course})
-MERGE (person)-[:STUDIED_AT {startyear: row.startyear, endyear: row.endyear}]->(institution)
-MERGE (person)-[:ENROLLED_IN]->(course);
+CREATE (p:Person {passportnumber: row.passportnumber, name: row.name})
+MERGE (i:Institution {nameofinstitution: row.nameofinstitution})
+CREATE (p)-[:STUDIED_AT {course: row.course, startyear: row.startyear, endyear: row.endyear}]->(i)
+SET p.country = row.country;
 
+// Create Person nodes and their transaction history relationships
 LOAD CSV WITH HEADERS FROM 'file:///I:/Data/sng_transaction.csv' AS row
-MERGE (person:Person {passportnumber: row.passportnumber, name: row.name})
-MERGE (merchant:Merchant {name: row.merchant})
-MERGE (person)-[:MADE_TRANSACTION {cardnumber: row.cardnumber, transactiondate: row.transactiondate, amount: row.amount}]->(merchant);
+MATCH (p:Person {passportnumber: row.passportnumber})
+CREATE (c:Card {cardnumber: row.cardnumber})
+MERGE (m:Merchant {name: row.merchant})
+CREATE (p)-[:HAS_CARD]->(c)
+CREATE (p)-[:MADE_TRANSACTION {transactiondate: row.transactiondate, amount: row.amount}]->(m);
 
+// Create Person nodes and their travel history relationships
 LOAD CSV WITH HEADERS FROM 'file:///I:/Data/sng_trips.csv' AS row
-MERGE (person:Person {passportnumber: row.passportnumber, name: row.name})
-MERGE (departure:Country {name: row.departurecountry})
-MERGE (arrival:Country {name: row.arrivalcountry})
-MERGE (person)-[:TRAVELED_TO {departuredate: row.departuredate, arrivaldate: row.arrivaldate}]->(arrival);
+MATCH (p:Person {passportnumber: row.passportnumber})
+MERGE (c:Country {name: row.departurecountry})
+MERGE (d:Country {name: row.arrivalcountry})
+CREATE (p)-[:DEPARTED_FROM {departuredate: row.departuredate}]->(c)
+CREATE (p)-[:ARRIVED_AT {arrivaldate: row.arrivaldate}]->(d);
 
+// Create Person nodes and their work history relationships
 LOAD CSV WITH HEADERS FROM 'file:///I:/Data/sng_work.csv' AS row
-MERGE (person:Person {passportnumber: row.passportnumber, name: row.name})
-MERGE (organization:Organization {nameoforganization: row.nameoforganization})
-MERGE (person)-[:WORKED_AT {designation: row.designation, startyear: row.startyear, endyear: row.endyear}]->(organization);
+MATCH (p:Person {passportnumber: row.passportnumber})
+CREATE (o:Organization {nameoforganization: row.nameoforganization, designation: row.designation, startyear: row.startyear, endyear: row.endyear})
+CREATE (p)-[:WORKED_AT]->(o);
 ```
 
 ## Cypher Query
